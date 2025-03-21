@@ -9,7 +9,7 @@ import { duplicateQuestion, makeBlankQuestion } from "./objects";
 export function getPublishedQuestions(questions: Question[]): Question[] {
     let copy = [...questions];
     const published = copy.filter(
-        (question: Question): boolean => question.published
+        (question: Question): boolean => question.published,
     );
     return published;
 }
@@ -25,7 +25,7 @@ export function getNonEmptyQuestions(questions: Question[]): Question[] {
         (question: Question): boolean =>
             question.body !== "" ||
             question.expected !== "" ||
-            question.options.length !== 0
+            question.options.length !== 0,
     );
     return nonEmpty;
 }
@@ -36,10 +36,10 @@ export function getNonEmptyQuestions(questions: Question[]): Question[] {
  */
 export function findQuestion(
     questions: Question[],
-    id: number
+    id: number,
 ): Question | null {
     const questionIndex = questions.findIndex(
-        (question: Question): boolean => question.id === id
+        (question: Question): boolean => question.id === id,
     );
     if (questionIndex === -1) {
         return null;
@@ -54,7 +54,7 @@ export function findQuestion(
 export function removeQuestion(questions: Question[], id: number): Question[] {
     let copy = [...questions];
     const questionIndex = copy.findIndex(
-        (question: Question): boolean => question.id === id
+        (question: Question): boolean => question.id === id,
     );
     if (questionIndex === -1) {
         return copy;
@@ -81,7 +81,7 @@ export function sumPoints(questions: Question[]): number {
     const total = copy.reduce(
         (currentTotal: number, question: Question) =>
             currentTotal + question.points,
-        0
+        0,
     );
     return total;
 }
@@ -92,12 +92,12 @@ export function sumPoints(questions: Question[]): number {
 export function sumPublishedPoints(questions: Question[]): number {
     let copy = [...questions];
     const published = copy.filter(
-        (question: Question): boolean => question.published
+        (question: Question): boolean => question.published,
     );
     const total = published.reduce(
         (currentTotal: number, question: Question) =>
             currentTotal + question.points,
-        0
+        0,
     );
     return total;
 }
@@ -129,8 +129,8 @@ export function toCSV(questions: Question[]): string {
                 question.name,
                 question.options.length.toString(),
                 question.points.toString(),
-                question.published
-            ].join(",")
+                question.published,
+            ].join(","),
         )
         .join("\n");
     return header + "\n" + table;
@@ -148,8 +148,8 @@ export function makeAnswers(questions: Question[]): Answer[] {
             questionId: question.id,
             text: "",
             submitted: false,
-            correct: false
-        })
+            correct: false,
+        }),
     );
 }
 
@@ -160,7 +160,7 @@ export function makeAnswers(questions: Question[]): Answer[] {
 export function publishAll(questions: Question[]): Question[] {
     let copy = [...questions];
     return copy.map(
-        (question: Question): Question => ({ ...question, published: true })
+        (question: Question): Question => ({ ...question, published: true }),
     );
 }
 
@@ -171,11 +171,11 @@ export function publishAll(questions: Question[]): Question[] {
 export function sameType(questions: Question[]): boolean {
     const allMult = questions.every(
         (question: Question): boolean =>
-            question.type === "multiple_choice_question"
+            question.type === "multiple_choice_question",
     );
     const allShort = questions.every(
         (question: Question): boolean =>
-            question.type === "short_answer_question"
+            question.type === "short_answer_question",
     );
     return allMult || allShort;
 }
@@ -189,7 +189,7 @@ export function addNewQuestion(
     questions: Question[],
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question[] {
     let copy = [...questions];
     copy.splice(questions.length, 0, makeBlankQuestion(id, name, type));
@@ -204,12 +204,14 @@ export function addNewQuestion(
 export function renameQuestionById(
     questions: Question[],
     targetId: number,
-    newName: string
+    newName: string,
 ): Question[] {
     let copy = [...questions];
     return copy.map(
         (question: Question): Question =>
-            question.id === targetId ? { ...question, name: newName } : question
+            question.id === targetId ?
+                { ...question, name: newName }
+            :   question,
     );
 }
 
@@ -223,17 +225,17 @@ export function renameQuestionById(
 export function changeQuestionTypeById(
     questions: Question[],
     targetId: number,
-    newQuestionType: QuestionType
+    newQuestionType: QuestionType,
 ): Question[] {
     let copy = [...questions];
     const targetIndex = copy.findIndex(
-        (question: Question): boolean => question.id === targetId
+        (question: Question): boolean => question.id === targetId,
     );
     if (newQuestionType === "short_answer_question") {
         copy[targetIndex] = {
             ...questions[targetIndex],
             type: newQuestionType,
-            options: []
+            options: [],
         };
         return copy;
     }
@@ -255,11 +257,11 @@ export function editOption(
     questions: Question[],
     targetId: number,
     targetOptionIndex: number,
-    newOption: string
+    newOption: string,
 ): Question[] {
     let copy = [...questions];
     const targetIndex = copy.findIndex(
-        (question: Question): boolean => question.id === targetId
+        (question: Question): boolean => question.id === targetId,
     );
     let copyOptions = [...copy[targetIndex].options];
     if (targetOptionIndex === -1) {
@@ -280,11 +282,11 @@ export function editOption(
 export function duplicateQuestionInArray(
     questions: Question[],
     targetId: number,
-    newId: number
+    newId: number,
 ): Question[] {
     let copy = [...questions];
     const targetIndex = copy.findIndex(
-        (question: Question): boolean => question.id === targetId
+        (question: Question): boolean => question.id === targetId,
     );
     let duplicated = duplicateQuestion(newId, copy[targetIndex]);
     copy.splice(targetIndex + 1, 0, duplicated);
