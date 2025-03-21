@@ -11,7 +11,7 @@ import { ColoredBox } from "./bad-components/ColoredBox";
 import { ShoveBox } from "./bad-components/ShoveBox";
 import { ChooseTeam } from "./bad-components/ChooseTeam";
 import { CheckAnswer } from "./form-components/CheckAnswer";
-// import { GiveAttempts } from "./form-components/GiveAttempts";
+import { GiveAttempts } from "./form-components/GiveAttempts";
 // import { EditMode } from "./form-components/EditMode";
 // import { MultipleChoiceQuestion } from "./form-components/MultipleChoiceQuestion";
 // import { ChangeColor } from "./form-components/ChangeColor";
@@ -24,9 +24,9 @@ function App(): React.JSX.Element {
             </header>
             <hr></hr>
             <CheckAnswer expectedAnswer="42"></CheckAnswer>
-            {/* <hr></hr>
-            <GiveAttempts></GiveAttempts>
             <hr></hr>
+            <GiveAttempts></GiveAttempts>
+            {/* <hr></hr>
             <EditMode></EditMode>
             <hr></hr>
             <ChangeColor></ChangeColor>
